@@ -1,38 +1,25 @@
-import Algoritmos.Cluster;
+import Algoritmos.*;
+import Entrada.LerArquivo;
 import Grafo.*;
-import Algoritmos.Kruskal;
+
+import java.io.IOException;
 
 public class App {
-    public static int getRandomNumber(int min, int max) {
-        return (int) ((Math.random() * (max - min)) + min);
-    }
+    public static void main(String[] args) throws IOException {
+        int NUM_PROFESSORES = 2;
 
-    public static void main(String[] args) {
-        int numVertices = 10_000;
-        long start;
-        Grafo teste = new Grafo(numVertices);
+        LerArquivo leitor = new LerArquivo();
+        leitor.lerAreaDePesquisa();
+        leitor.lerDissimilaridade();
+        leitor.lerAluno();
+        Grafo kn = leitor.setGrafo();
 
-        start = System.currentTimeMillis();
-        for (int i = 0; i < numVertices - 1; i++)
-            for (int j = i + 1; j < numVertices; j++)
-                teste.adicionarAresta(i, j, getRandomNumber(0, 100));
+        Kruskal krus = new Kruskal(kn);
+        Grafo agm = krus.buildAGM();
 
-        System.out.println("Kn Graph Build: " + (System.currentTimeMillis() - start)/1000 + "s");
-//        System.out.println(teste.outputMatrizAdj());
+        Cluster cluster = new Cluster(agm);
+        cluster.build(NUM_PROFESSORES);
 
-        start = System.currentTimeMillis();
-        Kruskal kruskal = new Kruskal(teste);
-        Grafo agm = kruskal.buildAGM();
-
-        System.out.println("Kruskal Algorithm: " + (System.currentTimeMillis() - start)/1000 + "s");
-//        System.out.println(agm.outputMatrizAdj());
-
-        start = System.currentTimeMillis();
-        Cluster clu = new Cluster(agm);
-        Grafo resultado = clu.clusterizar(5);
-
-        System.out.println("Clusterize: " + (System.currentTimeMillis() - start)/1000 + "s");
-//        System.out.println(resultado.outputMatrizAdj());
-
+        System.out.println(cluster);
     }
 }

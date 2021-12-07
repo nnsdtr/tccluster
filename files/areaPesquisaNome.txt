@@ -3,7 +3,7 @@ Nanotecnologia Computacional
 Jogos Digitais
 Bancos de Dados
 Teoria dos Grafos
-Processamento Digital de Imagens 
+Processamento Digital de Imagens
 Projeto e Análise de Algoritmos
 Visão Computacional
 Análise e Otimização de Código
@@ -11,7 +11,7 @@ Compiladores
 Teoria de Linguagens
 Bancos de Dados Geográficos
 Engenharia de Software
-Arquitetura de Software 
+Arquitetura de Software
 Otimização Linear e Não Linear
 Sistemas Paralelos e Distribuídos
 Redes de Computadores

@@ -52,18 +52,4 @@ public class DFS {
         ArrayList<Vertice> clusterAtual = this.clusteres.get(componente-1);
         clusterAtual.add(u);
     }
-
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        int i = 1;
-        for (ArrayList<Vertice> clusterAtual : this.clusteres) {
-            builder.append("Grupo de pesquisa ").append(i).append(":\n");
-            Collections.sort(clusterAtual);
-            for (Vertice aluno : clusterAtual)
-                builder.append(aluno).append("\n");
-            builder.append("\n");
-            i++;
-        }
-        return builder.toString();
-    }
 }

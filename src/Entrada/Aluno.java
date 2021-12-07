@@ -2,28 +2,21 @@ package Entrada;
 
 public class Aluno
 {
-    //#region Atributos (Variaveis). (IDAluno, IDAreaDePesquisa)
     private int IDAluno;
     private AreaDePesquisa areaDePesquisa;
-    //private String NomeAreaDePesquisa;
-    //#endregion
 
-    //#region Construtores.
     public Aluno(int IDAluno, AreaDePesquisa areaDePesquisa)
     {
         Init(IDAluno, areaDePesquisa);
     }
 
-    // Inicializador de Objetos
     private void Init(int IDAluno, AreaDePesquisa areaDePesquisa)
     {
-        this.IDAluno = IDAluno;
+        this.IDAluno = IDAluno - 1;
         this.areaDePesquisa = areaDePesquisa;
     }
-    //#endregion
 
-    //#region Getters e Setters.
-    public int getIDAluno()
+    public int getID()
     {
         return this.IDAluno;
     }
@@ -32,7 +25,6 @@ public class Aluno
     {
         this.IDAluno = IDAluno;
     }
-    //***************************************************
 
 
     public AreaDePesquisa getAreaDePesquisa() {
@@ -42,9 +34,7 @@ public class Aluno
     public void setAreaDePesquisa(AreaDePesquisa areaDePesquisa) {
         this.areaDePesquisa = areaDePesquisa;
     }
-    //#endregion
 
-    //#region Metodos
     @Override
     public String toString()
     {
@@ -52,6 +42,5 @@ public class Aluno
         resposta.append("\nIDAluno: " + this.IDAluno + " - IDAreaDePesquisa: " + this.areaDePesquisa.getIdPesquisa());
         return resposta.toString();
     }
-    //#endregion
 }
 

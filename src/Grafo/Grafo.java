@@ -1,5 +1,6 @@
 package Grafo;
 
+import Entrada.Aluno;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,10 +48,10 @@ public class Grafo {
         }
     }
 
-    public void adicionarAresta(int u, int v, int peso) {
+    public void adicionarAresta(Aluno u, Aluno v, int peso) {
         try {
-            Vertice U = buscarVertice(u);
-            Vertice V = buscarVertice(v);
+            Vertice U = buscarVertice(u.getID());
+            Vertice V = buscarVertice(v.getID());
             if(U == null) {
                 U = new Vertice(u);
                 this.vertices.add(U);
@@ -61,8 +62,8 @@ public class Grafo {
             }
 
             Aresta nova = new Aresta(U, V, peso);
-            this.listaAdjacencia[u].add(nova);
-            this.listaAdjacencia[v].add(nova);
+            this.listaAdjacencia[u.getID()].add(nova);
+            this.listaAdjacencia[v.getID()].add(nova);
             this.arestas.add(nova);
 
         } catch (ArrayIndexOutOfBoundsException e) {

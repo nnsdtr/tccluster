@@ -4,14 +4,12 @@ import Entrada.*;
 import org.jetbrains.annotations.NotNull;
 
 public class Vertice implements Comparable<Vertice> {
-    private final int id;
+    private final Aluno aluno;
     private Cor cor;
-    private Aluno aluno;
 
-    public Vertice(int u) {
-        this.id = u;
+    public Vertice(Aluno aluno) {
+        this.aluno = aluno;
         this.cor = Cor.BRANCO;
-        this.aluno = null;
     }
 
     public void setCor(Cor cor) {
@@ -19,7 +17,7 @@ public class Vertice implements Comparable<Vertice> {
     }
 
     public int getID() {
-        return this.id;
+        return this.aluno.getID();
     }
 
     public Cor getCor() {
@@ -28,7 +26,7 @@ public class Vertice implements Comparable<Vertice> {
 
     @Override
     public int compareTo(Vertice outro) {
-        return this.id - outro.id;
+        return this.getID() - outro.getID();
     }
 
     @Override
@@ -37,13 +35,11 @@ public class Vertice implements Comparable<Vertice> {
             return false;
 
         Vertice outro = (Vertice) obj;
-
-        return this.id == outro.id;
+        return this.aluno == outro.aluno;
     }
 
     @Override
     public String toString(){
-//        return "Aluno " + (this.getID()+1) + " (" + this.aluno.getAreaDePesquisa().getNomeAreaDePesquisa() + ")";
-        return "Aluno\t" + (this.getID()+1) + "\t(NULL)";
+        return "Aluno " + (this.getID()+1) + " (" + this.aluno.getAreaDePesquisa().getNomeAreaDePesquisa() + ")";
     }
 }
