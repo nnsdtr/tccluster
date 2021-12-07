@@ -6,12 +6,17 @@ import java.io.IOException;
 
 public class App {
     public static void main(String[] args) throws IOException {
-        int NUM_PROFESSORES = 2;
+        int NUM_PROFESSORES = 5;
 
         LerArquivo leitor = new LerArquivo();
         leitor.lerAreaDePesquisa();
         leitor.lerDissimilaridade();
-        leitor.lerAluno();
+        leitor.lerAluno("files/entrada10.txt");
+//        leitor.lerAluno("files/entrada30.txt");
+//        leitor.lerAluno("files/entrada50.txt");
+//        leitor.lerAluno("files/entrada100.txt");
+//        leitor.lerAluno("files/entrada1000.txt");
+//        leitor.lerAluno("files/entrada100000.txt");
         Grafo kn = leitor.setGrafo();
 
         Kruskal krus = new Kruskal(kn);

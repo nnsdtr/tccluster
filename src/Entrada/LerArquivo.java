@@ -14,9 +14,9 @@ public class LerArquivo
     public ArrayList<AreaDePesquisa> listaAreaDePesquisa = new ArrayList<>();
     public MatrizDissimilaridade mtrxDiss = new MatrizDissimilaridade();
 
-    public void lerAluno() throws IOException // Carregou todos da lista.
+    public void lerAluno(String caminho) throws IOException // Carregou todos da lista.
     {
-        FileReader fr = new FileReader("files/entrada10.txt");
+        FileReader fr = new FileReader(caminho);
         BufferedReader br = new BufferedReader(fr);
         String linha;
 
