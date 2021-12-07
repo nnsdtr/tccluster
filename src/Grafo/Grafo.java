@@ -114,4 +114,8 @@ public class Grafo {
 
         return "Grafo desconexo.";
     }
+
+    public String getAL() {
+        return Arrays.toString(Arrays.stream(AL).toArray());
+    }
 }
