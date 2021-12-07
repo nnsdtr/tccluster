@@ -15,12 +15,10 @@ public class Cluster {
         assert arestas != null;
         Collections.sort(arestas);
 
-        System.out.println(this.agm);
         for (int i = 0; i < k - 1; i++){
             Aresta removida = arestas.pollLast();
             assert removida != null;
             this.agm.removerAresta(removida);
-            System.out.println(this.agm);
         }
         return this.agm;
     }
