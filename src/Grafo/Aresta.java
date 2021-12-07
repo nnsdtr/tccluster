@@ -19,8 +19,8 @@ public record Aresta(Vertice u, Vertice v, int peso) implements Comparable<Arest
     }
 
     public String toString() {
-        int U = this.u.getID();
-        int V = this.v.getID();
+        int U = this.u.getID() + 1;
+        int V = this.v.getID() + 1;
 
         if (U < V)
             return U + "-" + V + " (peso: " + this.peso + ")";
