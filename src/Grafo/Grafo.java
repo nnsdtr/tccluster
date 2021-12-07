@@ -54,8 +54,8 @@ public class Grafo {
         try {
             int u = qual.getU();
             int v = qual.getV();
-            this.AL[u].removeIf(a -> a.getV() == v);
-            this.AL[v].removeIf(a -> a.getU() == u);
+            this.AL[u].removeIf(a -> a.equals(qual));
+            this.AL[v].removeIf(a -> a.equals(qual));
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Posição inválida para matriz de adjacência.");
         }
@@ -63,14 +63,13 @@ public class Grafo {
 
     public @Nullable LinkedList<Aresta> getArestas() {
         LinkedList<Aresta> arestas = new LinkedList<>();
-        for (int u = 0; u < this.numVertices; u++)
-            for (int v = 0; v < AL[u].size(); v++) {
-                Aresta e = AL[u].get(v);
-                if(!arestas.contains(e))
+        for (LinkedList<Aresta> arestasDoVertice : this.AL)
+            for (Aresta e : arestasDoVertice) {
+                if (!arestas.contains(e))
                     arestas.add(e);
             }
 
-        if (arestas.size() > 1)
+        if (arestas.size() > 0)
             return arestas;
         return null;
     }

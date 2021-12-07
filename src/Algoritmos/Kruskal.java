@@ -1,4 +1,4 @@
-package KruskalAGM;
+package Algoritmos;
 
 import Grafo.*;
 import org.jetbrains.annotations.NotNull;
@@ -6,14 +6,14 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.LinkedList;
 
-public class AGM {
+public class Kruskal {
     private final LinkedList<Aresta> arestas;
     private final Grafo agm;
     private final int[] chefe;
     private final int numVertices;
     private int numArestasAdicionadas;
 
-    public AGM(@NotNull Grafo qual) {
+    public Kruskal(@NotNull Grafo qual) {
         this.arestas = qual.getArestas();
         assert this.arestas != null;
         Collections.sort(this.arestas);

@@ -11,14 +11,16 @@ public class Cluster {
     }
 
     public Grafo Clusterizacao (int k){
-        int numArestas = k-1;
-
         LinkedList<Aresta> arestas = this.agm.getArestas();
+        assert arestas != null;
         Collections.sort(arestas);
 
-        for (int i = 0; i < k; i++){
+        System.out.println(this.agm);
+        for (int i = 0; i < k - 1; i++){
             Aresta removida = arestas.pollLast();
+            assert removida != null;
             this.agm.removerAresta(removida);
+            System.out.println(this.agm);
         }
         return this.agm;
     }
