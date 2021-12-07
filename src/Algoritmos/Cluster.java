@@ -1,7 +1,7 @@
-package Grafo;
+package Algoritmos;
 
-import java.util.Collections;
-import java.util.LinkedList;
+import Grafo.*;
+import java.util.*;
 
 public class Cluster {
     Grafo agm;
@@ -10,7 +10,7 @@ public class Cluster {
         this.agm = agm;
     }
 
-    public Grafo Clusterizacao (int k){
+    public Grafo clusterizar(int k){
         LinkedList<Aresta> arestas = this.agm.getArestas();
         assert arestas != null;
         Collections.sort(arestas);
