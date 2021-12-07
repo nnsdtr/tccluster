@@ -1,17 +1,17 @@
 package Grafo;
 
-import Entrada.AreaDePesquisa;
+import Entrada.*;
 import org.jetbrains.annotations.NotNull;
 
 public class Vertice implements Comparable<Vertice> {
     private final int id;
     private Cor cor;
+    private Aluno aluno;
 
     public Vertice(int u) {
         this.id = u;
-        this.pai = null;
         this.cor = Cor.BRANCO;
-        this.componente = -1;
+        this.aluno = null;
     }
 
     public void setCor(Cor cor) {
@@ -43,6 +43,7 @@ public class Vertice implements Comparable<Vertice> {
 
     @Override
     public String toString(){
-        return "Aluno " + (this.getID()+1) + " (" + this.areaDePesquisa + ')';
+//        return "Aluno " + (this.getID()+1) + " (" + this.aluno.getAreaDePesquisa().getNomeAreaDePesquisa() + ")";
+        return "Aluno\t" + (this.getID()+1) + "\t(NULL)";
     }
 }
