@@ -1,5 +1,7 @@
 package Grafo;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Aresta implements Comparable<Aresta> {
     private final int u, v, peso;
 
@@ -25,9 +27,14 @@ public class Aresta implements Comparable<Aresta> {
         return this.peso - outra.peso;
     }
 
-    public boolean equals(int u, int v) {
-        return (this.u == u & this.v == v) ||
-                (this.u == v & this.v == u);
+    @Override
+    public boolean equals(@NotNull Object obj) {
+        if (this.getClass() != obj.getClass())
+            return false;
+
+        Aresta comparado = (Aresta) obj;
+        return (this.u == comparado.u & this.v == comparado.v) ||
+                (this.u == comparado.v & this.v == comparado.u);
     }
 
     public String toString() {
