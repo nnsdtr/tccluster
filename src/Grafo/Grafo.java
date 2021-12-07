@@ -3,6 +3,9 @@ package Grafo;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.*;
 
 public class Grafo {
@@ -25,7 +28,9 @@ public class Grafo {
 
     public void adicionarAresta(int u, int v, int peso) {
         try {
-            Aresta nova = new Aresta(u, v, peso);
+            Vertice U  = new Vertice(u);
+            Vertice V  = new Vertice(v);
+            Aresta nova = new Aresta(U, V, peso);
             this.listaAdjacencia[u].add(nova);
             this.listaAdjacencia[v].add(nova);
             this.arestas.add(nova);
@@ -36,8 +41,8 @@ public class Grafo {
 
     public void adicionarAresta(@NotNull Aresta qual) {
         try {
-            this.listaAdjacencia[qual.u()].add(qual);
-            this.listaAdjacencia[qual.v()].add(qual);
+            this.listaAdjacencia[qual.u().getID()].add(qual);
+            this.listaAdjacencia[qual.v().getID()].add(qual);
             this.arestas.add(qual);
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Posição inválida para matriz de adjacência.");
@@ -46,8 +51,8 @@ public class Grafo {
 
     public void removerAresta(@NotNull Aresta qual) {
         try {
-            this.listaAdjacencia[qual.u()].remove(qual);
-            this.listaAdjacencia[qual.v()].remove(qual);
+            this.listaAdjacencia[qual.u().getID()].remove(qual);
+            this.listaAdjacencia[qual.v().getID()].remove(qual);
             this.arestas.remove(qual);
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Posição inválida para matriz de adjacência.");
@@ -58,45 +63,74 @@ public class Grafo {
         return this.arestas;
     }
 
-    public String toString() {
-        if (this.arestas != null) {
-            StringBuilder build = new StringBuilder();
-            for (Aresta e : arestas)
-                build.append(e.u()).append("-").append(e.v()).append(" ");
-            return build.toString();
+    public @Nullable ArrayList<Vertice> getAdjacentes(Vertice u) {
+        ArrayList<Aresta> arestasDeU = this.listaAdjacencia[u.getID()];
+        ArrayList<Vertice> adjacentes = new ArrayList<>();
+        for (Aresta aresta : arestasDeU) {
+            Vertice adjacente = aresta.getAdjacente(u.getID());
+            adjacentes.add(adjacente);
         }
+        return adjacentes;
+    }
 
-        return "Grafo desconexo.";
+    public String toString() {
+        StringBuilder build = new StringBuilder();
+        for (Aresta e : arestas)
+            build.append(e.u().getID()).append("-").append(e.v().getID()).append(" ");
+        return build.toString();
     }
 
     public String outputMatrizAdj() {
-        if (this.arestas != null) {
-            int V = this.numVertices;
-            int[][] matrizAdj = new int[V][V];
-            for (int u=0; u < V; u++)
-                for (int v=0; v < V; v++)
-                    matrizAdj[u][v] = 0;
+        int numeroVertices = this.numVertices;
+        int[][] matrizAdj = new int[numeroVertices][numeroVertices];
+        for (int u=0; u < numeroVertices; u++)
+            for (int v=0; v < numeroVertices; v++)
+                matrizAdj[u][v] = 0;
 
-            for (Aresta e : arestas)
-                matrizAdj[e.u()][e.v()] = matrizAdj[e.v()][e.u()] = e.peso() + 1;
-
-            StringBuilder build = new StringBuilder();
-            for (int u=0; u < V; u++) {
-                for (int v = 0; v < V; v++) {
-                    build.append(matrizAdj[u][v]);
-                    if (v < V - 1)
-                        build.append(",");
-                }
-                build.append("\n");
-            }
-
-            return build.toString();
+        for (Aresta e : arestas) {
+            matrizAdj[e.u().getID()][e.v().getID()] = e.peso() + 1;
+            matrizAdj[e.v().getID()][e.u().getID()] = e.peso() + 1;
         }
 
-        return "Grafo desconexo.";
+        StringBuilder build = new StringBuilder();
+        for (int u=0; u < numeroVertices; u++) {
+            for (int v = 0; v < numeroVertices; v++) {
+                build.append(matrizAdj[u][v]);
+                if (v < numeroVertices - 1)
+                    build.append(",");
+            }
+            build.append("\n");
+        }
+
+        return build.toString();
+
     }
 
-    public String getListaAdjacencia() {
+
+
+    public void outputCSV(String CSV_FILE_NAME) throws FileNotFoundException {
+        List<String[]> dataLines = new ArrayList<>();
+        for (Aresta e : this.arestas)
+            dataLines.add(e.dataOutput());
+
+        File csvOutputFile = new File(CSV_FILE_NAME);
+        try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
+            pw.println("Source,Target");
+            dataLines.stream()
+                .map(this::convertToCSV)
+                .forEach(pw::println);
+        }
+    }
+
+    private String convertToCSV(String[] data) {
+        return String.join(",", data);
+    }
+
+    public ArrayList<Aresta>[] getListaAdjacencia() {
+        return listaAdjacencia;
+    }
+
+    public String listaAdjacenciaString() {
         return Arrays.toString(Arrays.stream(listaAdjacencia).toArray());
     }
 }

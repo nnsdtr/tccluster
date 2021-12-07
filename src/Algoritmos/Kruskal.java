@@ -34,8 +34,8 @@ public class Kruskal {
             if (atual == null)
                 throw new NullPointerException("Aresta inexistente.");
 
-            int chefeU = buscarChefe(atual.u());
-            int chefeV = buscarChefe(atual.v());
+            int chefeU = buscarChefe(atual.u().getID());
+            int chefeV = buscarChefe(atual.v().getID());
 
             if (chefeU != chefeV) {
                 this.unir(atual);
@@ -52,8 +52,8 @@ public class Kruskal {
     }
 
     private void unir(@NotNull Aresta qual) {
-        int chefeU = this.buscarChefe(qual.u());
-        int chefeV = this.buscarChefe(qual.v());
+        int chefeU = this.buscarChefe(qual.u().getID());
+        int chefeV = this.buscarChefe(qual.v().getID());
         this.chefe[chefeU] = chefeV;
         this.agm.adicionarAresta(qual);
         this.numArestasAdicionadas++;
