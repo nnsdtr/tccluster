@@ -1,5 +1,7 @@
 package Entrada;
 
+import Grafo.*;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -44,14 +46,6 @@ public class LerArquivo
 
             Aluno novoA = criarAluno(Integer.parseInt(auxL[0]), listaAreaDePesquisa.get(Integer.parseInt(auxL[1])-1));
             listaAlunos.add(novoA);
-
-            /*String NADP = auxL[1];
-            switch (NADP)
-            {
-                case "1":
-                    listaAlunos.add(criarAluno(Integer.parseInt(auxL[0]), Integer.parseInt(auxL[1], "Aprendizado de Máquina")));
-                    break;
-            }*/
 
         }
         fr.close();
@@ -101,4 +95,18 @@ public class LerArquivo
         br.close();
     }
     //#endregion
+
+    public Grafo setGrafo(){
+        int qtAlunos = this.listaAlunos.size();
+        Grafo graf = new Grafo(qtAlunos);
+        for (int i = 0; i < qtAlunos; i++){
+            for (int j = i+1; j < qtAlunos;j++){
+                int areaI = this.listaAlunos.get(i).getAreaDePesquisa().getIdPesquisa();
+                int areaJ = this.listaAlunos.get(j).getAreaDePesquisa().getIdPesquisa();
+                int peso = this.mtrxDiss.getDissimilaridade(areaI,areaJ);
+                graf.adicionarAresta(i, j, peso);
+            }
+        }
+        return graf;
+    }
 }
