@@ -7,44 +7,24 @@ import java.util.*;
 
 public class Grafo {
     private final int numVertices;
-    private int numArestas;
-    private int pesoTotal;
-    private LinkedList<Aresta>[] AL;
+    private final LinkedList<Aresta>[] AL;
 
     @SuppressWarnings("unchecked")
     public Grafo(int numVertices) {
         this.numVertices = numVertices;
-        this.numArestas = 0;
-        this.pesoTotal = 0;
         this.AL = new LinkedList[numVertices];
-        for (int i = 0; i < this.AL.length; i++)
-            AL[i] = new LinkedList<>();
+        for (int v = 0; v < numVertices; v++)
+            AL[v] = new LinkedList<>();
     }
 
     public int getNumVertices() {
         return this.numVertices;
     }
 
-    public @Nullable LinkedList<Aresta> getArestas() {
-        if (this.numArestas > 0) {
-            LinkedList<Aresta> arestas = new LinkedList<>();
-            for (int i = 0; i < this.numVertices; i++)
-                for (int j = 0; j < AL[i].size(); j++) {
-                    Aresta aresta = AL[i].get(i);
-                    if(!arestas.contains(aresta))
-                        arestas.add(aresta);
-                }
-            return arestas;
-        }
-        return null;
-    }
-
     public void adicionarAresta(int u, int v, int peso) {
         try {
-            this.pesoTotal += peso;
             this.AL[u].add(new Aresta(u, v, peso));
             this.AL[v].add(new Aresta(v, u, peso));
-            this.numArestas++;
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Posição inválida para matriz de adjacência.");
         }
@@ -54,11 +34,8 @@ public class Grafo {
         try {
             int u = qual.getU();
             int v = qual.getV();
-            int peso = qual.getPeso();
-            this.pesoTotal += peso;
-            this.AL[u].add(new Aresta(u, v, peso));
-            this.AL[v].add(new Aresta(v, u, peso));
-            this.numArestas++;
+            this.AL[u].add(new Aresta(u, v, qual.getPeso()));
+            this.AL[v].add(new Aresta(v, u, qual.getPeso()));
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Posição inválida para matriz de adjacência.");
         }
@@ -66,20 +43,8 @@ public class Grafo {
 
     public void removerAresta(int u, int v) {
         try {
-            int peso = -1;
-            for(Aresta aresta : this.AL[u])
-                if(aresta.getV() == v) {
-                    peso = aresta.getPeso();
-                    break;
-                }
-
-            if (peso == -1)
-                throw new NullPointerException("Aresta inexistente. Peso retornou -1.");
-
-            this.pesoTotal -= peso;
             this.AL[u].removeIf(a -> a.getV() == v);
             this.AL[v].removeIf(a -> a.getU() == u);
-            this.numArestas--;
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Posição inválida para matriz de adjacência.");
         }
@@ -89,82 +54,62 @@ public class Grafo {
         try {
             int u = qual.getU();
             int v = qual.getV();
-
-            int peso = qual.getPeso();
-            this.pesoTotal -= peso;
             this.AL[u].removeIf(a -> a.getV() == v);
             this.AL[v].removeIf(a -> a.getU() == u);
-            this.numArestas--;
-
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Posição inválida para matriz de adjacência.");
         }
     }
 
-    public double desvioPadraoPesos() {
-        if (this.numArestas > 1) {
-            double mediaPesos = this.mediaPesos();
-            ArrayList<Integer> pesos = this.getPesos();
+    public @Nullable LinkedList<Aresta> getArestas() {
+        LinkedList<Aresta> arestas = new LinkedList<>();
+        for (int u = 0; u < this.numVertices; u++)
+            for (int v = 0; v < AL[u].size(); v++) {
+                Aresta e = AL[u].get(v);
+                if(!arestas.contains(e))
+                    arestas.add(e);
+            }
 
-            double soma = 0d;
-            for (Integer peso : pesos)
-                soma += Math.pow(peso - mediaPesos, 2);
-
-            return Math.sqrt(soma/this.numArestas);
-        }
-        return 0;
-    }
-
-    public double mediaPesos() {
-        if (this.numArestas > 0)
-            return this.pesoTotal / (double) this.numArestas;
-        else
-            return 0;
-    }
-
-    private @Nullable ArrayList<Integer> getPesos() {
-        if (this.numArestas > 0) {
-            ArrayList<Integer> lista = new ArrayList<>();
-            for (int i = 0; i < this.numVertices - 1; i++)
-                for (int j = i + 1; j < this.numVertices; j++)
-                    if(arestaExiste(i, j))
-                        lista.add(listaAdj[i][j]);
-            return lista;
-        }
+        if (arestas.size() > 1)
+            return arestas;
         return null;
     }
 
-    public boolean arestaExiste(int u, int v) {
-        return listaAdj[u][v] != -1;
-    }
-
     public String toString() {
-        if (this.numArestas > 0) {
-            StringBuilder print = new StringBuilder();
-            for (int i = 0; i < this.numVertices - 1; i++)
-                for (int j = i + 1; j < this.numVertices; j++)
-                    if(arestaExiste(i, j))
-                        print.append(i+1).append("-").append(j+1).append(" ");
-
-            return print.toString();
+        LinkedList<Aresta> arestas = this.getArestas();
+        if (arestas != null) {
+            StringBuilder build = new StringBuilder();
+            for (Aresta e : arestas)
+                build.append(e.getU()).append("-").append(e.getV()).append(" ");
+            return build.toString();
         }
 
         return "Grafo desconexo.";
     }
 
     public String outputMatrizAdj() {
-        if (this.numArestas > 0) {
-            StringBuilder print = new StringBuilder();
+        LinkedList<Aresta> arestas = this.getArestas();
+        if (arestas != null) {
+            int V = this.numVertices;
+            int[][] matrizAdj = new int[V][V];
+            for (int u=0; u < V; u++)
+                for (int v=0; v < V; v++)
+                    matrizAdj[u][v] = 0;
 
-            for (int i = 0; i < this.numVertices; i++) {
-                for (int j = 0; j < this.numVertices; j++) {
-                    print.append(listaAdj[i][j] + 1);
-                    if (j < this.numVertices - 1)
-                        print.append(",");
+            for (Aresta e : arestas)
+                matrizAdj[e.getU()][e.getV()] = matrizAdj[e.getV()][e.getU()] = e.getPeso() + 1;
+
+            StringBuilder build = new StringBuilder();
+            for (int u=0; u < V; u++) {
+                for (int v = 0; v < V; v++) {
+                    build.append(matrizAdj[u][v]);
+                    if (v < V - 1)
+                        build.append(",");
                 }
-                print.append("\n");
+                build.append("\n");
             }
-            return print.toString();
+
+            return build.toString();
         }
 
         return "Grafo desconexo.";
