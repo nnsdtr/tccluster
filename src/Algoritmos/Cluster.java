@@ -11,12 +11,12 @@ public class Cluster {
     }
 
     public Grafo clusterizar(int k){
-        LinkedList<Aresta> arestas = this.agm.getArestas();
+        ArrayList<Aresta> arestas = this.agm.getArestas();
         assert arestas != null;
         Collections.sort(arestas);
 
         for (int i = 0; i < k - 1; i++){
-            Aresta removida = arestas.pollLast();
+            Aresta removida = arestas.remove(arestas.size()-1);
             assert removida != null;
             this.agm.removerAresta(removida);
         }

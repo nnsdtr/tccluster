@@ -2,26 +2,7 @@ package Grafo;
 
 import org.jetbrains.annotations.NotNull;
 
-public class Aresta implements Comparable<Aresta> {
-    private final int u, v, peso;
-
-    public Aresta(int u, int v, int peso) {
-        this.u = u;
-        this.v = v;
-        this.peso = peso;
-    }
-
-    public int getU() {
-        return this.u;
-    }
-
-    public int getV() {
-        return this.v;
-    }
-
-    public int getPeso() {
-        return this.peso;
-    }
+public record Aresta(int u, int v, int peso) implements Comparable<Aresta> {
 
     public int compareTo(Aresta outra) {
         return this.peso - outra.peso;
@@ -38,7 +19,7 @@ public class Aresta implements Comparable<Aresta> {
     }
 
     public String toString() {
-        if(this.u < this.v)
+        if (this.u < this.v)
             return this.u + "-" + this.v + " (peso: " + this.peso + ")";
         return this.v + "-" + this.u + " (peso: " + this.peso + ")";
     }

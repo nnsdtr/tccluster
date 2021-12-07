@@ -3,11 +3,11 @@ package Algoritmos;
 import Grafo.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 
 public class Kruskal {
-    private final LinkedList<Aresta> arestas;
+    private final ArrayList<Aresta> arestas;
     private final Grafo agm;
     private final int[] chefe;
     private final int numVertices;
@@ -28,17 +28,17 @@ public class Kruskal {
             this.chefe[i] = i;
     }
 
-    public Grafo build() {
+    public Grafo buildAGM() {
         while (this.numArestasAdicionadas < this.numVertices - 1) {
-            Aresta corrente = this.arestas.poll();
-            if (corrente == null)
+            Aresta atual = this.arestas.remove(arestas.size()-1);
+            if (atual == null)
                 throw new NullPointerException("Aresta inexistente.");
 
-            int chefeU = buscarChefe(corrente.getU());
-            int chefeV = buscarChefe(corrente.getV());
+            int chefeU = buscarChefe(atual.u());
+            int chefeV = buscarChefe(atual.v());
 
             if (chefeU != chefeV) {
-                this.unir(corrente);
+                this.unir(atual);
             }
         }
 
@@ -52,8 +52,8 @@ public class Kruskal {
     }
 
     private void unir(@NotNull Aresta qual) {
-        int chefeU = this.buscarChefe(qual.getU());
-        int chefeV = this.buscarChefe(qual.getV());
+        int chefeU = this.buscarChefe(qual.u());
+        int chefeV = this.buscarChefe(qual.v());
         this.chefe[chefeU] = chefeV;
         this.agm.adicionarAresta(qual);
         this.numArestasAdicionadas++;
