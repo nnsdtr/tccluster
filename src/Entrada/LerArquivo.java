@@ -10,13 +10,13 @@ import java.util.ArrayList;
 
 public class LerArquivo
 {
-    public ArrayList<Aluno> listaAlunos =  new ArrayList<>();
-    public ArrayList<AreaDePesquisa> listaAreaDePesquisa = new ArrayList<>();
-    public MatrizDissimilaridade mtrxDiss = new MatrizDissimilaridade();
+    private final ArrayList<Aluno> listaAlunos =  new ArrayList<>();
+    private final ArrayList<AreaDePesquisa> listaAreaDePesquisa = new ArrayList<>();
+    private final MatrizDissimilaridade matrizDissimilaridade = new MatrizDissimilaridade();
 
-    public void lerAluno(String caminho) throws IOException // Carregou todos da lista.
+    public void lerAluno(String filepath) throws IOException // Carregou todos da lista.
     {
-        FileReader fr = new FileReader(caminho);
+        FileReader fr = new FileReader(filepath);
         BufferedReader br = new BufferedReader(fr);
         String linha;
 
@@ -36,7 +36,7 @@ public class LerArquivo
         BufferedReader br = new BufferedReader(fr);
         String linha;
 
-        int id = 1;
+        int id = 0;
         while ((linha = br.readLine()) != null)
         {
             String[] auxL = linha.split("\n");
@@ -63,13 +63,17 @@ public class LerArquivo
 
             int p = 0;
             for (int c = 20 - valores.length; c < 20; c++){
-                mtrxDiss.adicionarValor(l,c,Integer.parseInt(valores[p]));
+                matrizDissimilaridade.adicionarValor(l,c,Integer.parseInt(valores[p]));
                 p++;
             }
 
             l++;
         }
         br.close();
+    }
+
+    public MatrizDissimilaridade getMatrizDissimilaridade() {
+        return this.matrizDissimilaridade;
     }
 
     public Grafo setGrafo(){
@@ -79,7 +83,7 @@ public class LerArquivo
             Aluno alunoI = this.listaAlunos.get(i);
             for (int j = i+1; j < qtAlunos;j++) {
                 Aluno alunoJ = this.listaAlunos.get(j);
-                int peso = this.mtrxDiss.getDissimilaridade(
+                int peso = this.matrizDissimilaridade.getDissimilaridade(
                     alunoI.getAreaDePesquisa().getIdPesquisa(),
                     alunoJ.getAreaDePesquisa().getIdPesquisa()
                 );
