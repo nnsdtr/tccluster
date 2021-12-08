@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 public record Aresta(Vertice u, Vertice v, int peso) implements Comparable<Aresta> {
 
+    @Override
     public int compareTo(Aresta outra) {
         return this.peso - outra.peso;
     }

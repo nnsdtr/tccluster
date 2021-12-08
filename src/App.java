@@ -6,20 +6,25 @@ import java.io.IOException;
 
 public class App {
     public static void main(String[] args) throws IOException {
-        int NUM_PROFESSORES = 2;
+        int NUM_PROFESSORES = 4;
 
         LerArquivo leitor = new LerArquivo();
         leitor.lerAreaDePesquisa();
         leitor.lerDissimilaridade();
-        leitor.lerAluno();
+        leitor.lerAluno("files/entrada10.txt");
         Grafo kn = leitor.setGrafo();
 
-        Kruskal krus = new Kruskal(kn);
-        Grafo agm = krus.buildAGM();
+//        System.out.println(kn.outputMatrizAdj());
 
-        Cluster cluster = new Cluster(agm);
+        Cluster cluster = new Cluster(kn);
         cluster.build(NUM_PROFESSORES);
 
-        System.out.println(cluster);
+//        System.out.println(kn.outputMatrizAdj());
+
+        System.out.println(cluster.getAgm().outputMatrizAdj());
+
+//        System.out.println(leitor.getMatrizDissimilaridade());
+
+//        System.out.println(cluster);
     }
 }

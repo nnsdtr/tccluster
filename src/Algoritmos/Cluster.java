@@ -4,15 +4,19 @@ import Grafo.*;
 import java.util.*;
 
 public class Cluster {
+    private final Grafo grafo;
     private Grafo agm;
     private ArrayList<ArrayList<Vertice>> clusteres;
-    private String relatorio;
 
-    public Cluster(Grafo agm) {
-        this.agm = agm;
+    public Cluster(Grafo grafo) {
+        this.grafo = grafo;
+        this.agm = null;
     }
 
     public void build(int k){
+        Kruskal kruskal = new Kruskal(this.grafo);
+        this.agm = kruskal.buildAGM();
+
         ArrayList<Aresta> arestas = this.agm.getArestas();
         assert arestas != null;
         Collections.sort(arestas);
@@ -29,10 +33,6 @@ public class Cluster {
 
     public Grafo getAgm() {
         return agm;
-    }
-
-    public void setAgm(Grafo agm) {
-        this.agm = agm;
     }
 
     public String toString() {

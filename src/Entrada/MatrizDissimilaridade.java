@@ -19,9 +19,9 @@ public class MatrizDissimilaridade {
 
     public int getDissimilaridade (int l, int c){
         if (l<=c){
-            return this.matriz[l-1][c-1];
+            return this.matriz[l][c];
         }else {
-            return this.matriz[c-1][l-1];
+            return this.matriz[c][l];
         }
     }
 

@@ -30,7 +30,7 @@ public class Kruskal {
 
     public Grafo buildAGM() {
         while (this.numArestasAdicionadas < this.numVertices - 1) {
-            Aresta atual = this.arestas.remove(arestas.size()-1);
+            Aresta atual = this.arestas.remove(0);
             if (atual == null)
                 throw new NullPointerException("Aresta inexistente.");
 

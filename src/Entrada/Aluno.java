@@ -7,10 +7,10 @@ public class Aluno
 
     public Aluno(int IDAluno, AreaDePesquisa areaDePesquisa)
     {
-        Init(IDAluno, areaDePesquisa);
+        init(IDAluno, areaDePesquisa);
     }
 
-    private void Init(int IDAluno, AreaDePesquisa areaDePesquisa)
+    private void init(int IDAluno, AreaDePesquisa areaDePesquisa)
     {
         this.IDAluno = IDAluno - 1;
         this.areaDePesquisa = areaDePesquisa;
