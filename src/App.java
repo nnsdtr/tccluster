@@ -11,7 +11,7 @@ public class App {
         LerArquivo leitor = new LerArquivo();
         leitor.lerAreaDePesquisa();
         leitor.lerDissimilaridade();
-        leitor.lerAluno("files/entrada10.txt");
+        leitor.lerAluno("files/entrada100.txt");
         Grafo kn = leitor.setGrafo();
 
 //        System.out.println(kn.outputMatrizAdj());
@@ -19,12 +19,9 @@ public class App {
         Cluster cluster = new Cluster(kn);
         cluster.build(NUM_PROFESSORES);
 
-//        System.out.println(kn.outputMatrizAdj());
 
-        System.out.println(cluster.getAgm().outputMatrizAdj());
+//        System.out.println(cluster.getAgm().outputMatrizAdj());
 
-//        System.out.println(leitor.getMatrizDissimilaridade());
-
-//        System.out.println(cluster);
+        System.out.println(cluster);
     }
 }
