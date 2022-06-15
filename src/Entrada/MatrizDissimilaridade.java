@@ -3,7 +3,7 @@ package Entrada;
 import java.util.Arrays;
 
 public class MatrizDissimilaridade {
-    private int [][] matriz;
+    private final int [][] matriz;
 
     public MatrizDissimilaridade() {
         this.matriz = new int[20][20];
@@ -13,15 +13,15 @@ public class MatrizDissimilaridade {
         return matriz;
     }
 
-    public void setMatriz(int l, int c, int val) {
+    public void adicionarValor(int l, int c, int val) {
         this.matriz[l][c] = val;
     }
 
     public int getDissimilaridade (int l, int c){
         if (l<=c){
-            return this.matriz[l-1][c-1];
+            return this.matriz[l][c];
         }else {
-            return this.matriz[c-1][l-1];
+            return this.matriz[c][l];
         }
     }
 

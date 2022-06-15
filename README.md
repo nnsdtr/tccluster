@@ -1,8 +1,8 @@
-# tccluster
+### Desenvolvimento de Aplicações em Grafos - 2021.2 - PUCMinas - Unidade São Gabriel
+### Aplicação para Clusterização de temas para TCCs
 
-## Desenvolvimento de Aplicações em Grafos (2021.2) - \[PUCMinas - Unidade São Gabriel] 
+Utiliza-se de:
+- Algoritmo de Kruskal
+- Algoritmo DFS
+- Modelagem de estrutura de dados para Grafos
 
-Desenvolvimento de Aplicação para Clusterização de Temas de TCC.
-- Modelagem de Grafos
-- Kruskal Algorithm
-- DFS

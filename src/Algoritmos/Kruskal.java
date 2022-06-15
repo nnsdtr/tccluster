@@ -1,19 +1,19 @@
-package KruskalAGM;
+package Algoritmos;
 
 import Grafo.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 
-public class AGM {
-    private final LinkedList<Aresta> arestas;
+public class Kruskal {
+    private final ArrayList<Aresta> arestas;
     private final Grafo agm;
     private final int[] chefe;
     private final int numVertices;
     private int numArestasAdicionadas;
 
-    public AGM(@NotNull Grafo qual) {
+    public Kruskal(@NotNull Grafo qual) {
         this.arestas = qual.getArestas();
         assert this.arestas != null;
         Collections.sort(this.arestas);
@@ -28,17 +28,17 @@ public class AGM {
             this.chefe[i] = i;
     }
 
-    public Grafo build() {
+    public Grafo buildAGM() {
         while (this.numArestasAdicionadas < this.numVertices - 1) {
-            Aresta corrente = this.arestas.poll();
-            if (corrente == null)
+            Aresta atual = this.arestas.remove(0);
+            if (atual == null)
                 throw new NullPointerException("Aresta inexistente.");
 
-            int chefeU = buscarChefe(corrente.getU());
-            int chefeV = buscarChefe(corrente.getV());
+            int chefeU = buscarChefe(atual.u().getID());
+            int chefeV = buscarChefe(atual.v().getID());
 
             if (chefeU != chefeV) {
-                this.unir(corrente);
+                this.unir(atual);
             }
         }
 
@@ -52,8 +52,8 @@ public class AGM {
     }
 
     private void unir(@NotNull Aresta qual) {
-        int chefeU = this.buscarChefe(qual.getU());
-        int chefeV = this.buscarChefe(qual.getV());
+        int chefeU = this.buscarChefe(qual.u().getID());
+        int chefeV = this.buscarChefe(qual.v().getID());
         this.chefe[chefeU] = chefeV;
         this.agm.adicionarAresta(qual);
         this.numArestasAdicionadas++;
